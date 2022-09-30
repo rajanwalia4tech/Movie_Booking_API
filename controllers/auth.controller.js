@@ -5,6 +5,7 @@ const { successResponseBody, errorResponseBody } = require('../utils/responsebod
 
 const signup = async (req, res) => {
     try {
+        await userService.isAlreadyRegistered(req.body.email);
         const response = await userService.createUser(req.body);
         successResponseBody.data = response;
         successResponseBody.message = "Successfully registered a user";

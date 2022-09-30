@@ -3,6 +3,7 @@ const { USER_ROLE, USER_STATUS, STATUS} = require('../utils/constants');
 
 const createUser = async (data) => {
     try {
+
         if(!data.userRole || data.userRole == USER_ROLE.customer) {
             if(data.userStatus && data.userStatus != USER_STATUS.approved) {
                 throw {
@@ -83,9 +84,26 @@ const updateUserRoleOrStatus = async (data, userId) => {
     }
 }
 
+
+const isAlreadyRegistered = async (email) => {
+    try {
+        const response = await User.findOne({
+            email: email
+        });
+        if(response) {
+            throw {err: "You are already registered with us", code: 400};
+        }
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
     getUserByEmail,
     getUserById,
-    updateUserRoleOrStatus
+    updateUserRoleOrStatus,
+    isAlreadyRegistered
 }

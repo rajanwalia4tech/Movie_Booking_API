@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/auth.middlewares');
 
 const route = (app) => {
     app.patch(
-        '/mba/api/v1/user/:id',
+        '/api/user/:id',
         authMiddleware.isAuthenticated,
         userMiddleware.validateUpdateUserRequest,
         authMiddleware.isAdmin,
